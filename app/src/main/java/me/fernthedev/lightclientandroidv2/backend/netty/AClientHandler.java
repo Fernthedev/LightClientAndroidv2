@@ -39,9 +39,18 @@ public class AClientHandler extends ClientHandler {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        boolean register = client.registered;
-        super.channelActive(ctx);
-        client.registered = register;
+        serverLoginActivity.runOnUiThread(() -> {
+            boolean register = client.registered;
+
+            try {
+                AClientHandler.super.channelActive(ctx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            client.registered = register;
+        });
+
     }
 
     @Override

@@ -49,7 +49,7 @@ public class AClient extends Client {
 
     @Override
     public void initialize() {
-        logger.addHandler(new ConsoleIO.LogHandler());
+        logger.addHandler(new ConsoleIO.LogHandler(serverLoginActivity));
         super.initialize();
        /* logger.info("MODEL: "+android.os.Build.MODEL
                 +"\nDEVICE: "+android.os.Build.DEVICE

@@ -288,7 +288,7 @@ public class ServerLoginActivity extends AppCompatActivity implements LoaderCall
 
             while(client.getClientThread().registering) {
                 try {
-                    System.out.println("Registering " + authInfo.getIp() + ":" + authInfo.getPort());
+                    //System.out.println("Registering " + authInfo.getIp() + ":" + authInfo.getPort());
 
                     if(isCancelled()) break;
 

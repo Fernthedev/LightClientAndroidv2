@@ -30,14 +30,14 @@
         android:layout_width="76dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="24dp"
         android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp" />
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"

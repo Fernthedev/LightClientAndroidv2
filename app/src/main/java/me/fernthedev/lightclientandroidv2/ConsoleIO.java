@@ -62,26 +62,35 @@ public class ConsoleIO extends AppCompatActivity {
 
     public static class LogHandler extends java.util.logging.Handler {
 
-        @Override
-        public void publish(LogRecord record) {
-            if(mConsoleOutput != null) {
-                mConsoleOutput.append(record.getMessage() + newline);
-                // find the amount we need to scroll.  This works by
-                // asking the TextView's internal layout for the position
-                // of the final line and then subtracting the TextView's height
-                final int scrollAmount = mConsoleOutput.getLayout().getLineTop(mConsoleOutput.getLineCount()) - mConsoleOutput.getHeight();
-                // if there is no need to scroll, scrollAmount will be <=0
-                if (scrollAmount > 0)
-                    mConsoleOutput.scrollTo(0, scrollAmount);
-                else
-                    mConsoleOutput.scrollTo(0, 0);
-            } else {
-                addLog(record.getMessage());
+        private static ServerLoginActivity serverLoginActivity;
 
-            }
+        public LogHandler(ServerLoginActivity serverLoginActivity) {
+            LogHandler.serverLoginActivity = serverLoginActivity;
         }
 
-        private static void addLog(String thing) {
+        @Override
+        public synchronized void publish(LogRecord record) {
+            serverLoginActivity.runOnUiThread(() -> {
+                if(mConsoleOutput != null) {
+                    mConsoleOutput.append(record.getMessage() + newline);
+                    // find the amount we need to scroll.  This works by
+                    // asking the TextView's internal layout for the position
+                    // of the final line and then subtracting the TextView's height
+                    final int scrollAmount = mConsoleOutput.getLayout().getLineTop(mConsoleOutput.getLineCount()) - mConsoleOutput.getHeight();
+                    // if there is no need to scroll, scrollAmount will be <=0
+                    if (scrollAmount > 0)
+                        mConsoleOutput.scrollTo(0, scrollAmount);
+                    else
+                        mConsoleOutput.scrollTo(0, 0);
+                } else {
+                    addLog(record.getMessage());
+
+                }
+            });
+
+        }
+
+        private static synchronized void addLog(String thing) {
             oldLog += thing + newline;
         }
 
